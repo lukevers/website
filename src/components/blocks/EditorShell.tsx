@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 import { EditorTab } from './EditorTab';
+import { SettingsPanel } from './SettingsPanel';
 
 interface EditorShellProps {
   path?: string;
@@ -17,13 +20,22 @@ export function EditorShell({
   role,
   ariaLabel,
 }: EditorShellProps) {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <div
-      className="flex-1 flex flex-col min-w-0 min-h-0 bg-[var(--editor-bg)]"
+      className="flex-1 flex flex-col min-w-0 min-h-0 bg-[var(--editor-bg)] relative"
       role={role}
       aria-label={ariaLabel}
     >
-      {path && <EditorTab path={path} />}
+      {path && (
+        <EditorTab
+          path={path}
+          settingsOpen={settingsOpen}
+          onSettingsToggle={() => setSettingsOpen((v) => !v)}
+        />
+      )}
+      {settingsOpen && <SettingsPanel />}
       {children}
     </div>
   );

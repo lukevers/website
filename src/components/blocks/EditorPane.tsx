@@ -1,5 +1,6 @@
+import { useSettings } from '../../context/settings/useSettings';
 import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
-import { EditorShell } from '../elements/EditorShell';
+import { EditorShell } from './EditorShell';
 
 interface EditorPaneProps {
   path: string;
@@ -12,9 +13,10 @@ interface EditorPaneProps {
  */
 export function EditorPane({ path, content }: EditorPaneProps) {
   const highlighter = useHighlighter();
+  const { settings } = useSettings();
+
   const lang = langForPath(path);
   const lines = content.split('\n');
-
   const highlighted =
     highlighter && lang
       ? highlighter.codeToHtml(content, {
@@ -38,11 +40,13 @@ export function EditorPane({ path, content }: EditorPaneProps) {
         </div>
         {highlighted ? (
           <div
-            className="[&>pre]:m-0 [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:whitespace-pre [&>pre]:bg-transparent!"
+            className={`[&>pre]:m-0 [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:bg-transparent! ${settings.wordWrap ? '[&>pre]:whitespace-pre-wrap [&>pre]:break-all' : '[&>pre]:whitespace-pre'}`}
             dangerouslySetInnerHTML={{ __html: highlighted }}
           />
         ) : (
-          <pre className="m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] whitespace-pre">
+          <pre
+            className={`m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] ${settings.wordWrap ? 'whitespace-pre-wrap break-all' : 'whitespace-pre'}`}
+          >
             <code className="font-inherit text-inherit">
               {lines.map((line, i) => (
                 <span key={i} className="block">

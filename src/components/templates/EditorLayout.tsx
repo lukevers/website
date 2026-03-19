@@ -1,4 +1,5 @@
 import type { TreeNode } from '../../__mock__/types';
+import { useSettings } from '../../context/settings/useSettings';
 import { EditorPane } from '../blocks/EditorPane';
 import { FileExplorer } from '../blocks/FileExplorer';
 import { EditorNotFound } from '../elements/EditorNotFound';
@@ -24,14 +25,18 @@ export function EditorLayout({
   tooLarge,
   onSelectFile,
 }: EditorLayoutProps) {
+  const { settings } = useSettings();
+
   return (
     <div className="flex w-full h-screen overflow-hidden">
-      <FileExplorer
-        tree={tree}
-        selectedPath={selectedPath}
-        defaultExpanded={new Set(['docs', 'src'])}
-        onSelectFile={onSelectFile}
-      />
+      {settings.sidebarOpen && (
+        <FileExplorer
+          tree={tree}
+          selectedPath={selectedPath}
+          defaultExpanded={new Set(['docs', 'src'])}
+          onSelectFile={onSelectFile}
+        />
+      )}
       <main className="flex-1 flex flex-col min-w-0">
         {notFound ? (
           <EditorNotFound path={selectedPath ?? '/'} />

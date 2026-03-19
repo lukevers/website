@@ -1,4 +1,4 @@
-import { EditorShell } from './EditorShell';
+import { EditorShell } from '../blocks/EditorShell';
 
 interface EditorNotFoundProps {
   path: string;
