@@ -22,7 +22,7 @@ function loadSettings(): Settings {
     // the first page you land on will most likely be the README.md file, which
     // looks nicer with word wrap and the sidebar collapsed.
     sidebarOpen: !narrowViewport,
-    wordWrap: !narrowViewport,
+    wordWrap: narrowViewport,
   };
 
   const raw =
