@@ -18,7 +18,7 @@ export function EditorTooLarge({ path }: EditorTooLargeProps) {
         </span>
         <span className="text-[var(--editor-text-muted)]">
           <a
-            href={`https://github.com/lukevers/lukevers.com/blob/main/${path}`}
+            href={`https://github.com/lukevers/website/blob/main/${path}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--editor-text)] hover:underline"
