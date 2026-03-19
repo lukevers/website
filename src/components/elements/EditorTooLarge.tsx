@@ -11,7 +11,7 @@ interface EditorTooLargeProps {
 export function EditorTooLarge({ path }: EditorTooLargeProps) {
   return (
     <EditorShell path={path}>
-      <div className="flex-1 flex flex-col items-center justify-center gap-2 text-sm font-mono">
+      <div className="flex-1 flex flex-col items-center justify-center gap-2 text-sm font-mono text-center px-4">
         <span className="text-[var(--editor-text-muted)]">
           oh no — <span className="text-[var(--editor-text)]">{path}</span> is
           too large to show in the browser, sorry!
