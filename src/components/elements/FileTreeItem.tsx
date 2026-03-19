@@ -1,4 +1,4 @@
-import { File } from 'lucide-react';
+import { FileIcon } from './FileIcon';
 
 interface FileTreeItemProps {
   name: string;
@@ -32,7 +32,7 @@ export function FileTreeItem({
       }}
       onClick={() => onSelect(path)}
     >
-      <File size={14} className="shrink-0 opacity-70" aria-hidden />
+      <FileIcon name={name} />
       <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
         {name}
       </span>
