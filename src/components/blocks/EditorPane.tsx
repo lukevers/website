@@ -8,8 +8,9 @@ interface EditorPaneProps {
 }
 
 /**
- * The read-only editor pane: a tab bar showing the file path, a line-number
- * gutter on the left, and the highlighted file content on the right.
+ * The read-only editor pane. Line numbers are rendered via CSS counters
+ * (Shiki path) or inline DOM (fallback path) using identical geometry so
+ * there is no layout shift when the highlighter finishes loading.
  */
 export function EditorPane({ path, content }: EditorPaneProps) {
   const highlighter = useHighlighter();
@@ -27,35 +28,42 @@ export function EditorPane({ path, content }: EditorPaneProps) {
 
   return (
     <EditorShell path={path} role="region" ariaLabel={`File content: ${path}`}>
-      <div className="flex-1 overflow-auto flex min-h-0">
-        <div
-          className="sticky left-0 min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)] shrink-0"
-          aria-hidden
-        >
-          {lines.map((_, i) => (
-            <span key={i} className="block">
-              {i + 1}
-            </span>
-          ))}
-        </div>
+      <div className="flex-1 overflow-auto min-h-0 py-2">
         {highlighted ? (
           <div
-            className={`[&>pre]:m-0 [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:bg-transparent! ${settings.wordWrap ? '[&>pre]:whitespace-pre-wrap [&>pre]:break-all' : '[&>pre]:whitespace-pre'}`}
+            className="shiki-wrap text-sm font-mono leading-normal"
+            style={
+              {
+                '--shiki-wrap': settings.wordWrap ? 'pre-wrap' : 'pre',
+              } as React.CSSProperties
+            }
             dangerouslySetInnerHTML={{ __html: highlighted }}
           />
         ) : (
-          <pre
-            className={`m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] ${settings.wordWrap ? 'whitespace-pre-wrap break-all' : 'whitespace-pre'}`}
+          // Fallback uses the same gutter geometry as the Shiki CSS path so
+          // there's no reflow if the highlighter arrives after first paint.
+          <div
+            className={`text-sm font-mono leading-normal ${settings.wordWrap ? 'whitespace-pre-wrap break-all' : 'whitespace-pre'}`}
           >
-            <code className="font-inherit text-inherit">
-              {lines.map((line, i) => (
-                <span key={i} className="block">
-                  {line || ' '}
-                  {'\n'}
+            {lines.map((line, i) => (
+              <div
+                key={i}
+                className="relative"
+                style={{
+                  paddingLeft: 'calc(48px + 12px)',
+                  minHeight: line === '' ? 'calc(0.875rem * 1.5)' : undefined,
+                }}
+              >
+                <span
+                  className="absolute left-0 top-0 w-[48px] pr-3 text-right select-none text-[var(--editor-line-num)] border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)] leading-normal"
+                  aria-hidden
+                >
+                  {i + 1}
                 </span>
-              ))}
-            </code>
-          </pre>
+                {line}
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </EditorShell>
