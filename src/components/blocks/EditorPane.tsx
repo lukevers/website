@@ -25,9 +25,9 @@ export function EditorPane({ path, content }: EditorPaneProps) {
 
   return (
     <EditorShell path={path} role="region" ariaLabel={`File content: ${path}`}>
-      <div className="flex-1 overflow-auto flex">
+      <div className="flex-1 overflow-auto flex min-h-0">
         <div
-          className="min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)] shrink-0"
+          className="sticky left-0 min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)] shrink-0"
           aria-hidden
         >
           {lines.map((_, i) => (
@@ -38,11 +38,11 @@ export function EditorPane({ path, content }: EditorPaneProps) {
         </div>
         {highlighted ? (
           <div
-            className="flex-1 overflow-auto [&>pre]:m-0 [&>pre]:h-full [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:whitespace-pre [&>pre]:bg-transparent!"
+            className="[&>pre]:m-0 [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:whitespace-pre [&>pre]:bg-transparent!"
             dangerouslySetInnerHTML={{ __html: highlighted }}
           />
         ) : (
-          <pre className="flex-1 m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] overflow-auto whitespace-pre">
+          <pre className="m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] whitespace-pre">
             <code className="font-inherit text-inherit">
               {lines.map((line, i) => (
                 <span key={i} className="block">
