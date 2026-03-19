@@ -12,16 +12,6 @@ if (window.location.pathname !== '/') {
   window.location.replace('/#' + window.location.pathname);
 }
 
-// On a fresh page load to /, default to README.md. We use sessionStorage so
-// that navigating back to / within the same session (without a reload) keeps
-// the empty state instead of bouncing back to README.md every time.
-if (window.location.pathname === '/' && !window.location.hash) {
-  if (!sessionStorage.getItem('lukevers.com:loaded')) {
-    sessionStorage.setItem('lukevers.com:loaded', '1');
-    window.location.replace('/#/README.md');
-  }
-}
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HashRouter>

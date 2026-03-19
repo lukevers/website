@@ -1,7 +1,6 @@
 import type { TreeNode } from '../../__mock__/types';
 import { EditorPane } from '../blocks/EditorPane';
 import { FileExplorer } from '../blocks/FileExplorer';
-import { EditorEmptyState } from '../elements/EditorEmptyState';
 import { EditorNotFound } from '../elements/EditorNotFound';
 import { EditorTooLarge } from '../elements/EditorTooLarge';
 
@@ -32,13 +31,11 @@ export function EditorLayout({
       />
       <main className="flex-1 flex flex-col min-w-0">
         {notFound ? (
-          <EditorNotFound path={selectedPath!} />
+          <EditorNotFound path={selectedPath ?? '/'} />
         ) : tooLarge ? (
           <EditorTooLarge path={selectedPath!} />
-        ) : selectedContent !== undefined ? (
-          <EditorPane path={selectedPath!} content={selectedContent} />
         ) : (
-          <EditorEmptyState />
+          <EditorPane path={selectedPath!} content={selectedContent!} />
         )}
       </main>
     </div>

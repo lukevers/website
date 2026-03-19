@@ -1,4 +1,4 @@
-import { EditorTab } from '../elements/EditorTab';
+import { EditorShell } from '../elements/EditorShell';
 
 interface EditorPaneProps {
   path: string;
@@ -13,12 +13,7 @@ export function EditorPane({ path, content }: EditorPaneProps) {
   const lines = content.split('\n');
 
   return (
-    <div
-      className="flex-1 flex flex-col min-w-0 bg-[var(--editor-bg)]"
-      role="region"
-      aria-label={`File content: ${path}`}
-    >
-      <EditorTab path={path} />
+    <EditorShell path={path} role="region" ariaLabel={`File content: ${path}`}>
       <div className="flex-1 overflow-auto flex">
         <div
           className="min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)]"
@@ -41,6 +36,6 @@ export function EditorPane({ path, content }: EditorPaneProps) {
           </code>
         </pre>
       </div>
-    </div>
+    </EditorShell>
   );
 }

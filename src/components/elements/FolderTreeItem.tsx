@@ -4,7 +4,7 @@ import * as React from 'react';
 import type { TreeNode } from '../../__mock__/types';
 import { FileTreeItem } from './FileTreeItem';
 
-interface Props {
+interface FolderTreeItemProps {
   node: Extract<TreeNode, { type: 'folder' }>;
   depth: number;
   selectedPath: string | null;
@@ -40,7 +40,7 @@ export function FolderTreeItem({
   selectedPath,
   defaultExpanded,
   onSelectFile,
-}: Props) {
+}: FolderTreeItemProps) {
   // Determine if the folder is expanded by default or if it should be expanded
   // based on the selected path.
   const [expanded, setExpanded] = React.useState(

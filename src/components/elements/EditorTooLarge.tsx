@@ -1,4 +1,4 @@
-import { EditorTab } from './EditorTab';
+import { EditorShell } from './EditorShell';
 
 interface EditorTooLargeProps {
   path: string;
@@ -9,8 +9,7 @@ interface EditorTooLargeProps {
  */
 export function EditorTooLarge({ path }: EditorTooLargeProps) {
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-[var(--editor-bg)]">
-      <EditorTab path={path} />
+    <EditorShell path={path}>
       <div className="flex-1 flex flex-col items-center justify-center gap-2 text-sm font-mono">
         <span className="text-[var(--editor-text-muted)]">
           oh no — <span className="text-[var(--editor-text)]">{path}</span> is
@@ -18,7 +17,7 @@ export function EditorTooLarge({ path }: EditorTooLargeProps) {
         </span>
         <span className="text-[var(--editor-text-muted)]">
           <a
-            href={`https://github.com/lukevers/website/blob/main/${path}`}
+            href={`https://github.com/lukevers/lukevers.com/blob/main/${path}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--editor-text)] hover:underline"
@@ -27,6 +26,6 @@ export function EditorTooLarge({ path }: EditorTooLargeProps) {
           </a>
         </span>
       </div>
-    </div>
+    </EditorShell>
   );
 }
