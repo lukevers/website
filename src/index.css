@@ -87,6 +87,16 @@
   }
 }
 
+/* Clickable links inside the raw code editor (both Shiki and fallback paths) */
+.editor-link {
+  color: var(--ctp-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.editor-link:hover {
+  color: var(--ctp-lavender);
+}
+
 /*
  * Shiki line-number gutter via CSS counters.
  * Each .line is a block with left padding equal to the gutter width.

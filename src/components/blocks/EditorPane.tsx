@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useSettings } from '../../context/settings/useSettings';
 import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
+import { linkifyHtml, linkifyLine } from '../../lib/linkify';
 import { canPreview } from '../../lib/preview';
 import { EditorShell } from './EditorShell';
 import { MarkdownPane } from './MarkdownPane';
@@ -42,10 +43,12 @@ export function EditorPane({ path, content }: EditorPaneProps) {
   const lines = content.split('\n');
   const highlighted =
     highlighter && lang
-      ? highlighter.codeToHtml(content, {
-          lang,
-          theme: 'catppuccin-macchiato',
-        })
+      ? linkifyHtml(
+          highlighter.codeToHtml(content, {
+            lang,
+            theme: 'catppuccin-macchiato',
+          }),
+        )
       : null;
 
   return (
@@ -88,7 +91,21 @@ export function EditorPane({ path, content }: EditorPaneProps) {
                 >
                   {i + 1}
                 </span>
-                {line}
+                {linkifyLine(line).map((seg, j) =>
+                  seg.type === 'link' ? (
+                    <a
+                      key={j}
+                      href={seg.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="editor-link"
+                    >
+                      {seg.text}
+                    </a>
+                  ) : (
+                    seg.value
+                  ),
+                )}
               </div>
             ))}
           </div>
