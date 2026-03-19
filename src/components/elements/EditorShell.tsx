@@ -9,8 +9,7 @@ interface EditorShellProps {
 
 /**
  * The shared outer wrapper for all editor panes: a consistent background, an
- * optional tab bar at the top, and a flex column body below. Use this instead
- * of duplicating the container div in every pane variant.
+ * optional tab bar at the top, and a flex column body below.
  */
 export function EditorShell({
   path,
