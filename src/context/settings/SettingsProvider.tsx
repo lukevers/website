@@ -14,7 +14,16 @@ import {
  */
 function loadSettings(): Settings {
   const narrowViewport = window.innerWidth <= 500;
-  const defaults: Settings = { ...DEFAULTS, sidebarOpen: !narrowViewport };
+  const defaults: Settings = {
+    ...DEFAULTS,
+
+    // If you load the page on a mobile device, we're going to turn on word
+    // wrap and collapse the sidebar by default. This is because on mobile,
+    // the first page you land on will most likely be the README.md file, which
+    // looks nicer with word wrap and the sidebar collapsed.
+    sidebarOpen: !narrowViewport,
+    wordWrap: !narrowViewport,
+  };
 
   const raw =
     localStorage.getItem(STORAGE_KEY) ?? sessionStorage.getItem(STORAGE_KEY);
