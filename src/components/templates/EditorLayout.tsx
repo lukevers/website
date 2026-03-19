@@ -13,6 +13,9 @@ interface EditorLayoutProps {
   onSelectFile: (path: string) => void;
 }
 
+/**
+ * The main layout component for the editor.
+ */
 export function EditorLayout({
   tree,
   selectedPath,

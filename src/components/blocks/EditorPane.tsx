@@ -1,3 +1,4 @@
+import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
 import { EditorShell } from '../elements/EditorShell';
 
 interface EditorPaneProps {
@@ -7,16 +8,26 @@ interface EditorPaneProps {
 
 /**
  * The read-only editor pane: a tab bar showing the file path, a line-number
- * gutter on the left, and the raw file content on the right.
+ * gutter on the left, and the highlighted file content on the right.
  */
 export function EditorPane({ path, content }: EditorPaneProps) {
+  const highlighter = useHighlighter();
+  const lang = langForPath(path);
   const lines = content.split('\n');
+
+  const highlighted =
+    highlighter && lang
+      ? highlighter.codeToHtml(content, {
+          lang,
+          theme: 'catppuccin-macchiato',
+        })
+      : null;
 
   return (
     <EditorShell path={path} role="region" ariaLabel={`File content: ${path}`}>
       <div className="flex-1 overflow-auto flex">
         <div
-          className="min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)]"
+          className="min-w-[48px] py-2 pr-3 text-right select-none text-[var(--editor-line-num)] text-sm font-mono leading-normal border-r border-[var(--editor-border)] bg-[var(--editor-line-num-bg)] shrink-0"
           aria-hidden
         >
           {lines.map((_, i) => (
@@ -25,16 +36,23 @@ export function EditorPane({ path, content }: EditorPaneProps) {
             </span>
           ))}
         </div>
-        <pre className="flex-1 m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] overflow-auto whitespace-pre">
-          <code className="font-inherit text-inherit">
-            {lines.map((line, i) => (
-              <span key={i} className="block">
-                {line || ' '}
-                {'\n'}
-              </span>
-            ))}
-          </code>
-        </pre>
+        {highlighted ? (
+          <div
+            className="flex-1 overflow-auto [&>pre]:m-0 [&>pre]:h-full [&>pre]:py-2 [&>pre]:px-3 [&>pre]:text-sm [&>pre]:font-mono [&>pre]:leading-normal [&>pre]:whitespace-pre [&>pre]:bg-transparent!"
+            dangerouslySetInnerHTML={{ __html: highlighted }}
+          />
+        ) : (
+          <pre className="flex-1 m-0 py-2 px-3 text-sm font-mono leading-normal text-[var(--editor-text)] overflow-auto whitespace-pre">
+            <code className="font-inherit text-inherit">
+              {lines.map((line, i) => (
+                <span key={i} className="block">
+                  {line || ' '}
+                  {'\n'}
+                </span>
+              ))}
+            </code>
+          </pre>
+        )}
       </div>
     </EditorShell>
   );
