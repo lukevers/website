@@ -1,6 +1,7 @@
-import { Github, Settings, X } from 'lucide-react';
+import { Eye, EyeOff, Github, Settings, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+import { canPreview } from '../../lib/preview';
 import { FileIcon } from '../elements/FileIcon';
 
 const GITHUB_REPO = 'https://github.com/lukevers/lukevers.com';
@@ -8,6 +9,8 @@ const GITHUB_REPO = 'https://github.com/lukevers/lukevers.com';
 interface EditorTabProps {
   path: string;
   notFound?: boolean;
+  previewOpen?: boolean;
+  onPreviewToggle?: () => void;
   settingsOpen: boolean;
   onSettingsToggle: () => void;
 }
@@ -18,6 +21,8 @@ interface EditorTabProps {
 export function EditorTab({
   path,
   notFound,
+  previewOpen,
+  onPreviewToggle,
   settingsOpen,
   onSettingsToggle,
 }: EditorTabProps) {
@@ -47,6 +52,26 @@ export function EditorTab({
       </div>
 
       <div className="ml-auto flex items-center h-[35px] px-2 gap-1">
+        {canPreview(path) && onPreviewToggle && (
+          <button
+            type="button"
+            onClick={onPreviewToggle}
+            className={`flex items-center justify-center rounded p-1 border-none cursor-pointer transition-colors ${
+              previewOpen
+                ? 'bg-[var(--sidebar-active)] text-[var(--sidebar-active-text)]'
+                : 'bg-transparent text-[var(--editor-text-muted)] hover:bg-[var(--sidebar-hover)]'
+            }`}
+            aria-label={previewOpen ? 'Show source' : 'Preview'}
+            title={previewOpen ? 'Show source' : 'Preview'}
+            aria-pressed={previewOpen}
+          >
+            {previewOpen ? (
+              <Eye size={14} aria-hidden />
+            ) : (
+              <EyeOff size={14} aria-hidden />
+            )}
+          </button>
+        )}
         {!notFound && (
           <a
             href={`${GITHUB_REPO}/blob/main/${path}`}

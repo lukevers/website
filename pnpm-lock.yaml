@@ -8,6 +8,9 @@ dependencies:
   lucide-react:
     specifier: ^0.577.0
     version: 0.577.0(react@19.2.4)
+  marked:
+    specifier: ^17.0.4
+    version: 17.0.4
   react:
     specifier: ^19.2.4
     version: 19.2.4
@@ -1698,6 +1701,12 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
     dev: true
+
+  /marked@17.0.4:
+    resolution: {integrity: sha512-NOmVMM+KAokHMvjWmC5N/ZOvgmSWuqJB8FoYI019j4ogb/PeRMKoKIjReZ2w3376kkA8dSJIP8uD993Kxc0iRQ==}
+    engines: {node: '>= 20'}
+    hasBin: true
+    dev: false
 
   /mdast-util-to-hast@13.2.1:
     resolution: {integrity: sha512-cctsq2wp5vTsLIcaymblUriiTcZd0CwWtCbLvrOzYCDZoWyMNV8sZ7krj09FSnsiJi3WVsHLM4k6Dq/yaPyCXA==}

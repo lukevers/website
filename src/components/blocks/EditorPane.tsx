@@ -1,6 +1,10 @@
+import { useState } from 'react';
+
 import { useSettings } from '../../context/settings/useSettings';
 import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
+import { canPreview } from '../../lib/preview';
 import { EditorShell } from './EditorShell';
+import { MarkdownPane } from './MarkdownPane';
 
 interface EditorPaneProps {
   path: string;
@@ -11,10 +15,28 @@ interface EditorPaneProps {
  * The read-only editor pane. Line numbers are rendered via CSS counters
  * (Shiki path) or inline DOM (fallback path) using identical geometry so
  * there is no layout shift when the highlighter finishes loading.
+ *
+ * Files whose format supports a preview (see src/lib/preview.ts) show a
+ * toggle in the tab bar. Preview is off by default so raw source is shown
+ * first.
  */
 export function EditorPane({ path, content }: EditorPaneProps) {
   const highlighter = useHighlighter();
   const { settings } = useSettings();
+  const [previewOpen, setPreviewOpen] = useState(false);
+
+  const toggle = canPreview(path) ? () => setPreviewOpen((v) => !v) : undefined;
+
+  if (previewOpen && path.endsWith('.md')) {
+    return (
+      <MarkdownPane
+        path={path}
+        content={content}
+        previewOpen={previewOpen}
+        onPreviewToggle={toggle!}
+      />
+    );
+  }
 
   const lang = langForPath(path);
   const lines = content.split('\n');
@@ -27,7 +49,13 @@ export function EditorPane({ path, content }: EditorPaneProps) {
       : null;
 
   return (
-    <EditorShell path={path} role="region" ariaLabel={`File content: ${path}`}>
+    <EditorShell
+      path={path}
+      previewOpen={previewOpen}
+      onPreviewToggle={toggle}
+      role="region"
+      ariaLabel={`File content: ${path}`}
+    >
       <div className="flex-1 overflow-auto min-h-0 py-2">
         {highlighted ? (
           <div

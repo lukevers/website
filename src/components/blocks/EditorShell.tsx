@@ -6,6 +6,8 @@ import { SettingsPanel } from './SettingsPanel';
 interface EditorShellProps {
   path?: string;
   notFound?: boolean;
+  previewOpen?: boolean;
+  onPreviewToggle?: () => void;
   children: React.ReactNode;
   role?: string;
   ariaLabel?: string;
@@ -18,6 +20,8 @@ interface EditorShellProps {
 export function EditorShell({
   path,
   notFound,
+  previewOpen,
+  onPreviewToggle,
   children,
   role,
   ariaLabel,
@@ -34,6 +38,8 @@ export function EditorShell({
         <EditorTab
           path={path}
           notFound={notFound}
+          previewOpen={previewOpen}
+          onPreviewToggle={onPreviewToggle}
           settingsOpen={settingsOpen}
           onSettingsToggle={() => setSettingsOpen((v) => !v)}
         />
