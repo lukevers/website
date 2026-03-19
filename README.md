@@ -6,7 +6,7 @@ Hi, I'm Luke.
 
 I thought it would be fun to make my website both be the UI and all of the code that makes the website run.
 
-Feel free to poke around, and check it out on [GitHub](https://github.com/lukevers/lukevers.com).
+Feel free to poke around, and check it out on [GitHub](https://github.com/lukevers/website).
 
 ## Social Links
 
