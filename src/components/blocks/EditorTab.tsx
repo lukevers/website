@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { canPreview } from '../../lib/preview';
 import { FileIcon } from '../elements/FileIcon';
 
-const GITHUB_REPO = 'https://github.com/lukevers/lukevers.com';
+const GITHUB_REPO = 'https://github.com/lukevers/website';
 
 interface EditorTabProps {
   path: string;
