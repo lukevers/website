@@ -1,111 +1,88 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-mono: var(--mono);
+}
+
+/* Catppuccin Macchiato — https://catppuccin.com/palette/ */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Macchiato palette */
+  --ctp-base: #24273a;
+  --ctp-mantle: #1e2030;
+  --ctp-crust: #181926;
+  --ctp-surface-0: #363a4f;
+  --ctp-surface-1: #494d64;
+  --ctp-surface-2: #5b6078;
+  --ctp-overlay-0: #6e738d;
+  --ctp-overlay-1: #8087a2;
+  --ctp-overlay-2: #939ab7;
+  --ctp-subtext-0: #a5adcb;
+  --ctp-subtext-1: #b8c0e0;
+  --ctp-text: #cad3f5;
+  --ctp-lavender: #b7bdf8;
+  --ctp-blue: #8aadf4;
+  --ctp-sapphire: #7dc4e4;
+  --ctp-sky: #91d7e3;
+  --ctp-teal: #8bd5ca;
+  --ctp-green: #a6da95;
+  --ctp-yellow: #eed49f;
+  --ctp-peach: #f5a97f;
+  --ctp-maroon: #ee99a0;
+  --ctp-red: #ed8796;
+  --ctp-mauve: #c6a0f6;
+  --ctp-pink: #f5bde6;
+  --ctp-flamingo: #f0c6c6;
+  --ctp-rosewater: #f4dbd6;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --sidebar-bg: var(--ctp-mantle);
+  --sidebar-border: var(--ctp-surface-0);
+  --sidebar-title: var(--ctp-subtext-0);
+  --sidebar-text: var(--ctp-subtext-1);
+  --sidebar-hover: var(--ctp-surface-0);
+  --sidebar-active: var(--ctp-surface-1);
+  --sidebar-active-text: var(--ctp-text);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  --editor-bg: var(--ctp-base);
+  --editor-border: var(--ctp-surface-0);
+  --editor-tab-bg: var(--ctp-mantle);
+  --editor-tab-text: var(--ctp-subtext-1);
+  --editor-text: var(--ctp-text);
+  --editor-text-muted: var(--ctp-overlay-1);
+  --editor-line-num: var(--ctp-overlay-0);
+  --editor-line-num-bg: var(--ctp-base);
+  --editor-bg-hover: var(--ctp-surface-0);
+
+  --mono:
+    'Cascadia Code', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo,
+    monospace;
+
+  font:
+    14px/1.5 system-ui,
+    -apple-system,
+    sans-serif;
+  color-scheme: dark;
+  color: var(--editor-text);
+  background: var(--editor-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  body {
+    margin: 0;
+    min-height: 100vh;
   }
-}
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  #root {
+    width: 100%;
+    min-height: 100vh;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
