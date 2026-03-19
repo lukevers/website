@@ -5,6 +5,7 @@ import { SettingsPanel } from './SettingsPanel';
 
 interface EditorShellProps {
   path?: string;
+  notFound?: boolean;
   children: React.ReactNode;
   role?: string;
   ariaLabel?: string;
@@ -16,6 +17,7 @@ interface EditorShellProps {
  */
 export function EditorShell({
   path,
+  notFound,
   children,
   role,
   ariaLabel,
@@ -31,6 +33,7 @@ export function EditorShell({
       {path && (
         <EditorTab
           path={path}
+          notFound={notFound}
           settingsOpen={settingsOpen}
           onSettingsToggle={() => setSettingsOpen((v) => !v)}
         />

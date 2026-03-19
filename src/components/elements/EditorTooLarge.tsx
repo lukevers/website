@@ -2,6 +2,7 @@ import { EditorShell } from '../blocks/EditorShell';
 
 interface EditorTooLargeProps {
   path: string;
+  notFound?: boolean;
 }
 
 /**

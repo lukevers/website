@@ -21,7 +21,7 @@ export function FileExplorer({
 }: FileExplorerProps) {
   return (
     <aside
-      className="w-[260px] min-w-[260px] flex flex-col shrink-0 bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)]"
+      className="w-[245px] min-w-[245px] flex flex-col shrink-0 bg-[var(--sidebar-bg)] border-r border-[var(--sidebar-border)]"
       aria-label="File explorer"
     >
       <div className="h-[35px] px-3 flex items-center border-b border-[var(--sidebar-border)] uppercase text-[11px] font-semibold tracking-wider text-[var(--sidebar-title)]">

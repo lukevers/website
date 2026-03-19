@@ -1,10 +1,13 @@
-import { Settings, X } from 'lucide-react';
+import { Github, Settings, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { FileIcon } from '../elements/FileIcon';
 
+const GITHUB_REPO = 'https://github.com/lukevers/lukevers.com';
+
 interface EditorTabProps {
   path: string;
+  notFound?: boolean;
   settingsOpen: boolean;
   onSettingsToggle: () => void;
 }
@@ -14,6 +17,7 @@ interface EditorTabProps {
  */
 export function EditorTab({
   path,
+  notFound,
   settingsOpen,
   onSettingsToggle,
 }: EditorTabProps) {
@@ -21,12 +25,11 @@ export function EditorTab({
   const filename = path.split('/').pop() ?? path;
 
   return (
-    <div className="flex items-end border-b border-[var(--editor-border)] bg-[var(--editor-tab-bg)]">
-      {/* active tab */}
-      <div className="relative flex items-center gap-1.5 h-[35px] px-3 bg-[var(--editor-bg)] border-r border-[var(--editor-border)] min-w-0">
+    <div className="flex items-end border-b border-[var(--editor-border)] bg-[var(--editor-tab-bg)] overflow-hidden">
+      <div className="relative flex items-center gap-1.5 h-[35px] px-3 bg-[var(--editor-bg)] border-r border-[var(--editor-border)] min-w-0 max-w-[75%]">
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-[var(--ctp-lavender)]" />
         <FileIcon name={filename} size={13} />
-        <span className="text-[13px] font-mono text-[var(--editor-tab-text)] whitespace-nowrap">
+        <span className="text-[13px] font-mono text-[var(--editor-tab-text)] truncate">
           {filename}
         </span>
         <button
@@ -43,8 +46,19 @@ export function EditorTab({
         </button>
       </div>
 
-      {/* cog pinned to the far right */}
-      <div className="ml-auto flex items-center h-[35px] px-2">
+      <div className="ml-auto flex items-center h-[35px] px-2 gap-1">
+        {!notFound && (
+          <a
+            href={`${GITHUB_REPO}/blob/main/${path}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center rounded p-1 text-[var(--editor-text-muted)] hover:bg-[var(--sidebar-hover)] transition-colors"
+            aria-label="View on GitHub"
+            title="View on GitHub"
+          >
+            <Github size={14} aria-hidden />
+          </a>
+        )}
         <button
           type="button"
           onClick={onSettingsToggle}
