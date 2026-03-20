@@ -24,8 +24,11 @@ interface EditorPaneProps {
 export function EditorPane({ path, content }: EditorPaneProps) {
   const highlighter = useHighlighter();
   const { settings } = useSettings();
-  const [previewOpen, setPreviewOpen] = useState(false);
 
+  // Preview should be turned on by default if the screen size
+  // is narrow and the file type supports it.
+  const narrowViewport = window.innerWidth <= 500;
+  const [previewOpen, setPreviewOpen] = useState(narrowViewport);
   const toggle = canPreview(path) ? () => setPreviewOpen((v) => !v) : undefined;
 
   if (previewOpen && path.endsWith('.md')) {
