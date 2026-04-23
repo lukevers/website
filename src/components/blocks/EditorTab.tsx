@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Github, Settings, X } from 'lucide-react';
+import { Eye, EyeOff, Github, X } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
 import {
@@ -16,8 +16,6 @@ interface EditorTabProps {
   notFound?: boolean;
   previewOpen?: boolean;
   onPreviewToggle?: () => void;
-  settingsOpen: boolean;
-  onSettingsToggle: () => void;
 }
 
 /**
@@ -28,8 +26,6 @@ export function EditorTab({
   notFound,
   previewOpen,
   onPreviewToggle,
-  settingsOpen,
-  onSettingsToggle,
 }: EditorTabProps) {
   const [, setSelectedPath] = useQueryState(
     FILE_QUERY_KEY,
@@ -92,19 +88,6 @@ export function EditorTab({
             <Github size={14} aria-hidden />
           </a>
         )}
-        <button
-          type="button"
-          onClick={onSettingsToggle}
-          className={`flex items-center justify-center rounded p-1 border-none cursor-pointer transition-colors ${
-            settingsOpen
-              ? 'bg-[var(--sidebar-active)] text-[var(--sidebar-active-text)]'
-              : 'bg-transparent text-[var(--editor-text-muted)] hover:bg-[var(--sidebar-hover)]'
-          }`}
-          aria-label="Toggle settings"
-          aria-expanded={settingsOpen}
-        >
-          <Settings size={14} aria-hidden />
-        </button>
       </div>
     </div>
   );

@@ -259,3 +259,87 @@
   max-width: 100%;
   border-radius: 4px;
 }
+
+/* Command palette overrides for the editor chrome */
+.command-palette .command-palette-content {
+  color: var(--editor-text);
+}
+
+.command-palette .transition,
+.command-palette .duration-200,
+.command-palette .duration-300 {
+  transition: none !important;
+}
+
+.command-palette .fixed.inset-0.bg-gray-900.bg-opacity-80 {
+  background: color-mix(in srgb, var(--ctp-crust) 78%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.command-palette .max-w-xl.rounded-lg {
+  max-width: 46rem;
+  border: 1px solid
+    color-mix(in srgb, var(--ctp-lavender) 18%, var(--editor-border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ctp-surface-0) 58%, var(--ctp-mantle)) 0%,
+    color-mix(in srgb, var(--ctp-base) 86%, var(--ctp-crust)) 100%
+  );
+  box-shadow:
+    0 22px 80px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(183, 189, 248, 0.06);
+}
+
+.command-palette .divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--editor-border);
+}
+
+.command-palette .command-palette-list-item {
+  color: var(--editor-text);
+}
+
+.command-palette .command-palette-list-item:hover,
+.command-palette
+  .command-palette-list-item[aria-disabled="false"]:focus-visible {
+  background: color-mix(in srgb, var(--ctp-surface-0) 88%, transparent);
+}
+
+.command-palette .command-palette-list-item[data-close-on-select="false"] {
+  color: var(--ctp-sky);
+}
+
+.command-palette .command-palette-list-item .text-gray-500,
+.command-palette h4.text-gray-500 {
+  color: var(--ctp-overlay-1);
+}
+
+.command-palette .command-palette-list-item .dark\:text-white,
+.command-palette .dark\:text-white,
+.command-palette input.dark\:text-white {
+  color: var(--editor-text);
+}
+
+.command-palette input::placeholder {
+  color: var(--ctp-overlay-0);
+}
+
+.command-palette .command-palette-list-item svg,
+.command-palette .w-4.pointer-events-none,
+.command-palette .w-5.text-gray-300 {
+  color: var(--ctp-lavender);
+}
+
+.command-menu-empty,
+.command-menu-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  color: var(--ctp-overlay-1);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+
+.command-menu-empty {
+  justify-content: flex-start;
+}

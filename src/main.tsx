@@ -1,3 +1,4 @@
+import 'react-cmdk/dist/cmdk.css';
 import './index.css';
 
 import { NuqsAdapter } from 'nuqs/adapters/react';
