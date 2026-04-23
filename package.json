@@ -2,6 +2,7 @@
   "name": "lukevers.com",
   "private": true,
   "type": "module",
+  "license": "MIT",
   "packageManager": "pnpm@8.15.4",
   "engines": {
     "node": "20.19.0",
