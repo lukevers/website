@@ -1,6 +1,9 @@
 import { useContext } from 'react';
 
-import { SettingsContext, type SettingsContextValue } from './SettingsContext';
+import {
+  SettingsContext,
+  type SettingsContextValue,
+} from '../context/settings/SettingsContext';
 
 /**
  * Access the current settings and a setter from anywhere in the tree.

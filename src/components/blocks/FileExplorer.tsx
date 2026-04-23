@@ -1,5 +1,5 @@
-import type { TreeNode } from '../../__mock__/types';
-import { TreeNode as TreeNodeItem } from '../elements/FolderTreeItem';
+import { TREE_NODE_TYPE, type TreeNode } from '../../__mock__/types';
+import { TreeNode as TreeNodeItem } from '../elements/TreeNode';
 
 interface FileExplorerProps {
   tree: Array<TreeNode>;
@@ -30,7 +30,7 @@ export function FileExplorer({
       <nav className="flex-1 overflow-y-auto py-1">
         {tree.map((node) => (
           <TreeNodeItem
-            key={node.type === 'file' ? node.path : node.name}
+            key={node.type === TREE_NODE_TYPE.file ? node.path : node.name}
             node={node}
             depth={0}
             selectedPath={selectedPath}

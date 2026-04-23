@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
-import { useSettings } from '../../context/settings/useSettings';
 import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
+import { useSettings } from '../../hooks/useSettings';
 import { linkifyHtml, linkifyLine } from '../../lib/linkify';
 import { canPreview } from '../../lib/preview';
 import { EditorShell } from './EditorShell';
 import { MarkdownPane } from './MarkdownPane';
+import { SvgPane } from './SvgPane';
 
 interface EditorPaneProps {
   path: string;
@@ -27,13 +28,24 @@ export function EditorPane({ path, content }: EditorPaneProps) {
   const [previewOpen, setPreviewOpen] = useState(previewable);
   const toggle = previewable ? () => setPreviewOpen((v) => !v) : undefined;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setPreviewOpen(canPreview(path));
   }, [path]);
 
   if (previewOpen && path.endsWith('.md')) {
     return (
       <MarkdownPane
+        path={path}
+        content={content}
+        previewOpen={previewOpen}
+        onPreviewToggle={toggle!}
+      />
+    );
+  }
+
+  if (previewOpen && path.endsWith('.svg')) {
+    return (
+      <SvgPane
         path={path}
         content={content}
         previewOpen={previewOpen}

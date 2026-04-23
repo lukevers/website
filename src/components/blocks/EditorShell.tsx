@@ -1,7 +1,8 @@
 import { PanelLeft } from 'lucide-react';
 import { useState } from 'react';
 
-import { useSettings } from '../../context/settings/useSettings';
+import { useSettings } from '../../hooks/useSettings';
+import { getCommandShortcutLabel } from '../../lib/platform';
 import { CommandMenu } from './CommandMenu';
 import { EditorTab } from './EditorTab';
 
@@ -30,6 +31,7 @@ export function EditorShell({
 }: EditorShellProps) {
   const { settings, setSetting } = useSettings();
   const [commandOpen, setCommandOpen] = useState(false);
+  const commandShortcutLabel = getCommandShortcutLabel();
 
   return (
     <div
@@ -69,9 +71,11 @@ export function EditorShell({
                 />
                 <span className="truncate">Search files and commands</span>
               </span>
-              <span className="shrink-0 font-mono text-[11px] text-[var(--ctp-overlay-0)]">
-                {navigator.platform.includes('Mac') ? '⌘K' : 'Ctrl K'}
-              </span>
+              {commandShortcutLabel && (
+                <span className="shrink-0 font-mono text-[11px] text-[var(--ctp-overlay-0)]">
+                  {commandShortcutLabel}
+                </span>
+              )}
             </button>
           </div>
         </div>

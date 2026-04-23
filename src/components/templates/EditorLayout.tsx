@@ -1,9 +1,9 @@
 import type { TreeNode } from '../../__mock__/types';
-import { useSettings } from '../../context/settings/useSettings';
+import { useSettings } from '../../hooks/useSettings';
 import { EditorPane } from '../blocks/EditorPane';
 import { FileExplorer } from '../blocks/FileExplorer';
-import { EditorNotFound } from '../elements/EditorNotFound';
-import { EditorTooLarge } from '../elements/EditorTooLarge';
+import { EditorNotFoundScreen } from '../screens/EditorNotFoundScreen';
+import { EditorTooLargeScreen } from '../screens/EditorTooLargeScreen';
 
 interface EditorLayoutProps {
   tree: Array<TreeNode>;
@@ -39,9 +39,9 @@ export function EditorLayout({
       )}
       <main className="flex-1 flex flex-col min-w-0">
         {notFound ? (
-          <EditorNotFound path={selectedPath} />
+          <EditorNotFoundScreen path={selectedPath} />
         ) : tooLarge ? (
-          <EditorTooLarge path={selectedPath} />
+          <EditorTooLargeScreen path={selectedPath} />
         ) : (
           <EditorPane path={selectedPath} content={selectedContent ?? ''} />
         )}

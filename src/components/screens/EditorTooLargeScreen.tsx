@@ -1,17 +1,16 @@
 import { EditorShell } from '../blocks/EditorShell';
 
-interface EditorTooLargeProps {
+interface EditorTooLargeScreenProps {
   path: string;
-  notFound?: boolean;
 }
 
 /**
  * Shown in the editor area when a file exists but is too large to display.
  */
-export function EditorTooLarge({ path }: EditorTooLargeProps) {
+export function EditorTooLargeScreen({ path }: EditorTooLargeScreenProps) {
   return (
     <EditorShell path={path}>
-      <div className="flex-1 flex flex-col items-center justify-center gap-2 text-sm font-mono text-center px-4">
+      <div className="flex-1 flex flex-col items-center justify-center gap-2 px-4 text-center font-mono text-sm">
         <span className="text-[var(--editor-text-muted)]">
           oh no — <span className="text-[var(--editor-text)]">{path}</span> is
           too large to show in the browser, sorry!

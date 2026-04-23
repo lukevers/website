@@ -53,6 +53,7 @@ export function linkifyHtml(html: string): string {
     if (mdText !== undefined) {
       return `<a href="${mdHref}" target="_blank" rel="noopener noreferrer" class="editor-link">${mdText}</a>`;
     }
+
     return `<a href="${bareUrl}" target="_blank" rel="noopener noreferrer" class="editor-link">${bareUrl}</a>`;
   });
 }

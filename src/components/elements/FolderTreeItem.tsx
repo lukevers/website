@@ -1,11 +1,15 @@
 import { ChevronRight, Folder, FolderOpen } from 'lucide-react';
 import * as React from 'react';
 
-import type { TreeNode as TreeNodeData } from '../../__mock__/types';
-import { FileTreeItem } from './FileTreeItem';
+import {
+  type FolderTreeNode,
+  TREE_NODE_TYPE,
+  type TreeNode as TreeNodeData,
+} from '../../__mock__/types';
+import { TreeNode } from './TreeNode';
 
 interface FolderTreeItemProps {
-  node: Extract<TreeNodeData, { type: 'folder' }>;
+  node: FolderTreeNode;
   depth: number;
   selectedPath: string | null;
   defaultExpanded: ReadonlySet<string>;
@@ -23,7 +27,7 @@ function containsSelected(
     return false;
   }
 
-  if (node.type === 'file') {
+  if (node.type === TREE_NODE_TYPE.file) {
     return node.path === selectedPath;
   }
 
@@ -87,7 +91,7 @@ export function FolderTreeItem({
           />
           {node.children.map((child) => (
             <TreeNode
-              key={child.type === 'file' ? child.path : child.name}
+              key={child.type === TREE_NODE_TYPE.file ? child.path : child.name}
               node={child}
               depth={depth + 1}
               selectedPath={selectedPath}
@@ -98,46 +102,5 @@ export function FolderTreeItem({
         </div>
       )}
     </div>
-  );
-}
-
-/**
- * Dispatches to FileTreeItem or FolderTreeItem depending on the node type.
- * Kept here (co-located with FolderTreeItem) because they are mutually
- * recursive — FolderTreeItem renders TreeNode for each of its children.
- */
-export function TreeNode({
-  node,
-  depth,
-  selectedPath,
-  defaultExpanded,
-  onSelectFile,
-}: {
-  node: TreeNodeData;
-  depth: number;
-  selectedPath: string | null;
-  defaultExpanded: ReadonlySet<string>;
-  onSelectFile: (path: string) => void;
-}) {
-  if (node.type === 'file') {
-    return (
-      <FileTreeItem
-        name={node.name}
-        path={node.path}
-        depth={depth}
-        isSelected={selectedPath === node.path}
-        onSelect={onSelectFile}
-      />
-    );
-  }
-
-  return (
-    <FolderTreeItem
-      node={node}
-      depth={depth}
-      selectedPath={selectedPath}
-      defaultExpanded={defaultExpanded}
-      onSelectFile={onSelectFile}
-    />
   );
 }

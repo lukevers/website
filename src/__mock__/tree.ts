@@ -1,5 +1,10 @@
 import { getFileContent, repoPathToGlobKey } from './glob';
-import type { FolderMap, TreeNode } from './types';
+import {
+  type FolderMap,
+  type FolderTreeNode,
+  TREE_NODE_TYPE,
+  type TreeNode,
+} from './types';
 
 /**
  * Sorts an array of TreeNodes so that:
@@ -9,8 +14,8 @@ import type { FolderMap, TreeNode } from './types';
  */
 function sortNodes(nodes: Array<TreeNode>): Array<TreeNode> {
   return nodes.sort((a, b) => {
-    const aIsFolder = a.type === 'folder';
-    const bIsFolder = b.type === 'folder';
+    const aIsFolder = a.type === TREE_NODE_TYPE.folder;
+    const bIsFolder = b.type === TREE_NODE_TYPE.folder;
 
     if (aIsFolder && !bIsFolder) {
       return -1;
@@ -29,10 +34,7 @@ function sortNodes(nodes: Array<TreeNode>): Array<TreeNode> {
  * have a `type` property are finished file nodes; everything else is a nested
  * `FolderMap` that needs to be recursed into.
  */
-function folderMapToNode(
-  name: string,
-  map: FolderMap,
-): { type: 'folder'; name: string; children: Array<TreeNode> } {
+function folderMapToNode(name: string, map: FolderMap): FolderTreeNode {
   const children: Array<TreeNode> = [];
 
   // Recursively convert the FolderMap into an array of TreeNodes.
@@ -48,7 +50,7 @@ function folderMapToNode(
     }
   }
 
-  return { type: 'folder', name, children: sortNodes(children) };
+  return { type: TREE_NODE_TYPE.folder, name, children: sortNodes(children) };
 }
 
 /**
@@ -76,7 +78,11 @@ function buildTree(repoPaths: Array<string>): Array<TreeNode> {
       const isLastSegment = i === parts.length - 1;
 
       if (isLastSegment) {
-        current[part] = { type: 'file', name: part, path: repoPath };
+        current[part] = {
+          type: TREE_NODE_TYPE.file,
+          name: part,
+          path: repoPath,
+        };
       } else {
         // If the segment is not the last, create a new FolderMap for it.
         if (!current[part]) {

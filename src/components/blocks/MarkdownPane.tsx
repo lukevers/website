@@ -1,5 +1,4 @@
-import { marked } from 'marked';
-
+import { renderMarkdown } from '../../lib/markdown';
 import { EditorShell } from './EditorShell';
 
 interface MarkdownPaneProps {
@@ -8,13 +7,6 @@ interface MarkdownPaneProps {
   previewOpen: boolean;
   onPreviewToggle: () => void;
 }
-
-// Open all links in a new tab and add rel="noopener noreferrer" for safety.
-const renderer = new marked.Renderer();
-renderer.link = ({ href, title, text }) => {
-  const titleAttr = title ? ` title="${title}"` : '';
-  return `<a href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
-};
 
 /**
  * Renders a markdown file as formatted HTML instead of raw source.
@@ -27,7 +19,7 @@ export function MarkdownPane({
   previewOpen,
   onPreviewToggle,
 }: MarkdownPaneProps) {
-  const html = marked(content, { renderer }) as string;
+  const html = renderMarkdown(content);
 
   return (
     <EditorShell

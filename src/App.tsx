@@ -14,6 +14,7 @@ export default function App() {
     FILE_QUERY_KEY,
     FILE_QUERY_STATE_OPTIONS,
   );
+
   const currentPath = selectedPath ?? DEFAULT_FILE_PATH;
   const content = contentMap[currentPath];
   const notFound = content === undefined;

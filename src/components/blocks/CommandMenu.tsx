@@ -8,7 +8,7 @@ import ReactCmdk, {
 } from 'react-cmdk';
 
 import { contentMap } from '../../__mock__/tree';
-import { useSettings } from '../../context/settings/useSettings';
+import { useSettings } from '../../hooks/useSettings';
 import {
   DEFAULT_FILE_PATH,
   FILE_QUERY_KEY,
