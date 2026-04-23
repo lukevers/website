@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSettings } from '../../context/settings/useSettings';
 import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
@@ -18,18 +18,18 @@ interface EditorPaneProps {
  * there is no layout shift when the highlighter finishes loading.
  *
  * Files whose format supports a preview (see src/lib/preview.ts) show a
- * toggle in the tab bar. Preview is off by default so raw source is shown
- * first.
+ * toggle in the tab bar. Markdown previews open by default.
  */
 export function EditorPane({ path, content }: EditorPaneProps) {
   const highlighter = useHighlighter();
   const { settings } = useSettings();
+  const previewable = canPreview(path);
+  const [previewOpen, setPreviewOpen] = useState(previewable);
+  const toggle = previewable ? () => setPreviewOpen((v) => !v) : undefined;
 
-  // Preview should be turned on by default if the screen size
-  // is narrow and the file type supports it.
-  const narrowViewport = window.innerWidth <= 500;
-  const [previewOpen, setPreviewOpen] = useState(narrowViewport);
-  const toggle = canPreview(path) ? () => setPreviewOpen((v) => !v) : undefined;
+  useEffect(() => {
+    setPreviewOpen(canPreview(path));
+  }, [path]);
 
   if (previewOpen && path.endsWith('.md')) {
     return (

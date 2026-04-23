@@ -39,7 +39,7 @@ export function MarkdownPane({
     >
       <div className="flex-1 overflow-auto min-h-0">
         <div
-          className="md-prose mx-auto max-w-3xl px-8 py-3 text-sm leading-relaxed"
+          className="md-prose max-w-3xl px-8 py-3 text-sm leading-relaxed"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
