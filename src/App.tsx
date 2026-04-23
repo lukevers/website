@@ -1,29 +1,25 @@
+import { useQueryState } from 'nuqs';
 import { useCallback } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import { contentMap, fileTree } from './__mock__/tree';
 import { EditorLayout } from './components/templates/EditorLayout';
+import { FILE_QUERY_KEY, FILE_QUERY_STATE_OPTIONS } from './lib/file-query';
 
 export default function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const pathname = location.pathname.replace(/^\/+|\/+$/g, '');
-  const selectedPath = pathname || null;
-  const content = selectedPath ? contentMap[selectedPath] : undefined;
-  const notFound = selectedPath !== null && content === undefined;
-  const tooLarge = selectedPath !== null && content === null;
+  const [selectedPath, setSelectedPath] = useQueryState(
+    FILE_QUERY_KEY,
+    FILE_QUERY_STATE_OPTIONS,
+  );
+  const content = contentMap[selectedPath];
+  const notFound = content === undefined;
+  const tooLarge = content === null;
 
   const onSelectFile = useCallback(
     (path: string) => {
-      navigate(`/${path}`, { replace: true });
+      void setSelectedPath(path);
     },
-    [navigate],
+    [setSelectedPath],
   );
-
-  if (selectedPath === null) {
-    return <Navigate to="/README.md" replace />;
-  }
 
   return (
     <EditorLayout

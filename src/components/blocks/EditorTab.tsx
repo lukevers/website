@@ -1,6 +1,11 @@
 import { Eye, EyeOff, Github, Settings, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useQueryState } from 'nuqs';
 
+import {
+  DEFAULT_FILE_PATH,
+  FILE_QUERY_KEY,
+  FILE_QUERY_STATE_OPTIONS,
+} from '../../lib/file-query';
 import { canPreview } from '../../lib/preview';
 import { FileIcon } from '../elements/FileIcon';
 
@@ -26,7 +31,10 @@ export function EditorTab({
   settingsOpen,
   onSettingsToggle,
 }: EditorTabProps) {
-  const navigate = useNavigate();
+  const [, setSelectedPath] = useQueryState(
+    FILE_QUERY_KEY,
+    FILE_QUERY_STATE_OPTIONS,
+  );
   const filename = path.split('/').pop() ?? path;
 
   return (
@@ -39,7 +47,7 @@ export function EditorTab({
         </span>
         <button
           type="button"
-          onClick={() => navigate('/README.md', { replace: true })}
+          onClick={() => void setSelectedPath(DEFAULT_FILE_PATH)}
           className="shrink-0 ml-1 flex items-center justify-center rounded hover:bg-[var(--sidebar-hover)] cursor-pointer border-none bg-transparent p-0"
           aria-label="Close file"
         >
