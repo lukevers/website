@@ -7,7 +7,7 @@ import { EditorTooLarge } from '../elements/EditorTooLarge';
 
 interface EditorLayoutProps {
   tree: Array<TreeNode>;
-  selectedPath: string | null;
+  selectedPath: string;
   selectedContent: string | undefined;
   notFound: boolean;
   tooLarge: boolean;
@@ -39,11 +39,11 @@ export function EditorLayout({
       )}
       <main className="flex-1 flex flex-col min-w-0">
         {notFound ? (
-          <EditorNotFound path={selectedPath ?? '/'} />
+          <EditorNotFound path={selectedPath} />
         ) : tooLarge ? (
-          <EditorTooLarge path={selectedPath!} />
+          <EditorTooLarge path={selectedPath} />
         ) : (
-          <EditorPane path={selectedPath!} content={selectedContent!} />
+          <EditorPane path={selectedPath} content={selectedContent ?? ''} />
         )}
       </main>
     </div>

@@ -3,14 +3,19 @@ import { useCallback } from 'react';
 
 import { contentMap, fileTree } from './__mock__/tree';
 import { EditorLayout } from './components/templates/EditorLayout';
-import { FILE_QUERY_KEY, FILE_QUERY_STATE_OPTIONS } from './lib/file-query';
+import {
+  DEFAULT_FILE_PATH,
+  FILE_QUERY_KEY,
+  FILE_QUERY_STATE_OPTIONS,
+} from './lib/file-query';
 
 export default function App() {
   const [selectedPath, setSelectedPath] = useQueryState(
     FILE_QUERY_KEY,
     FILE_QUERY_STATE_OPTIONS,
   );
-  const content = contentMap[selectedPath];
+  const currentPath = selectedPath ?? DEFAULT_FILE_PATH;
+  const content = contentMap[currentPath];
   const notFound = content === undefined;
   const tooLarge = content === null;
 
@@ -24,7 +29,7 @@ export default function App() {
   return (
     <EditorLayout
       tree={fileTree}
-      selectedPath={selectedPath}
+      selectedPath={currentPath}
       selectedContent={content ?? undefined}
       notFound={notFound}
       tooLarge={tooLarge}
