@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { isLightTheme } from '../../lib/theme';
 import {
   DEFAULTS,
   type Settings,
@@ -61,6 +62,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       localStorage.removeItem(STORAGE_KEY);
     }
   }, [settings]);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = settings.theme;
+    document.documentElement.style.colorScheme = isLightTheme(settings.theme)
+      ? 'light'
+      : 'dark';
+  }, [settings.theme]);
 
   const setSetting = <K extends keyof Settings>(key: K, value: Settings[K]) => {
     setSettings((prev) => ({ ...prev, [key]: value }));

@@ -4,6 +4,7 @@ import { langForPath, useHighlighter } from '../../hooks/useHighlighter';
 import { useSettings } from '../../hooks/useSettings';
 import { linkifyHtml, linkifyLine } from '../../lib/linkify';
 import { canPreview } from '../../lib/preview';
+import { getShikiTheme } from '../../lib/theme';
 import { EditorShell } from './EditorShell';
 import { MarkdownPane } from './MarkdownPane';
 import { SvgPane } from './SvgPane';
@@ -56,12 +57,13 @@ export function EditorPane({ path, content }: EditorPaneProps) {
 
   const lang = langForPath(path);
   const lines = content.split('\n');
+  const shikiTheme = getShikiTheme(settings.theme);
   const highlighted =
     highlighter && lang
       ? linkifyHtml(
           highlighter.codeToHtml(content, {
             lang,
-            theme: 'catppuccin-macchiato',
+            theme: shikiTheme,
           }),
         )
       : null;

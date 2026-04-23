@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getSingletonHighlighter, type Highlighter } from 'shiki';
 
+import { SHIKI_THEMES } from '../lib/theme';
+
 /**
  * Maps file extensions to the Shiki language id we want to use.
  */
@@ -31,7 +33,7 @@ export function useHighlighter(): Highlighter | null {
 
   useEffect(() => {
     getSingletonHighlighter({
-      themes: ['catppuccin-macchiato'],
+      themes: SHIKI_THEMES,
       langs: Object.values(ALLOWED_LANGUAGES_MAP).filter(
         (v, i, a) => a.indexOf(v) === i,
       ),

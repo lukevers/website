@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import { Github, Palette } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
 import ReactCmdk, {
@@ -15,6 +15,7 @@ import {
   FILE_QUERY_STATE_OPTIONS,
 } from '../../lib/file-query';
 import { canPreview } from '../../lib/preview';
+import { THEME_OPTIONS } from '../../lib/theme';
 
 interface CommandMenuProps {
   path: string;
@@ -48,7 +49,7 @@ export function CommandMenu({
     FILE_QUERY_STATE_OPTIONS,
   );
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState<'root' | 'files'>('root');
+  const [page, setPage] = useState<'root' | 'files' | 'themes'>('root');
   const previewIcon: IconName = previewOpen ? 'EyeSlashIcon' : 'EyeIcon';
 
   useEffect(() => {
@@ -130,6 +131,20 @@ export function CommandMenu({
         heading: 'Editor',
         id: 'editor',
         items: [
+          {
+            id: 'open-themes',
+            children: `Theme: ${
+              THEME_OPTIONS.find((theme) => theme.id === settings.theme)
+                ?.label ?? 'Catppuccin'
+            }`,
+            icon: Palette,
+            keywords: ['theme', 'appearance', 'color', 'palette'],
+            closeOnSelect: false,
+            onClick: () => {
+              setSearch('');
+              setPage('themes');
+            },
+          },
           ...(canPreview(path) && onPreviewToggle
             ? [
                 {
@@ -199,6 +214,28 @@ export function CommandMenu({
     search,
   );
 
+  const themeItems = filterItems(
+    [
+      {
+        heading: 'Themes',
+        id: 'theme-options',
+        items: THEME_OPTIONS.map((theme) => ({
+          id: `theme-${theme.id}`,
+          children:
+            settings.theme === theme.id
+              ? `${theme.label} (Current)`
+              : theme.label,
+          icon: Palette,
+          keywords: [...theme.keywords],
+          onClick: () => {
+            setSetting('theme', theme.id);
+          },
+        })),
+      },
+    ],
+    search,
+  );
+
   return (
     <CommandPalette
       isOpen={open}
@@ -213,7 +250,11 @@ export function CommandMenu({
       onChangeSearch={setSearch}
       page={page}
       placeholder={
-        page === 'files' ? 'Type a file name or path' : 'Search commands'
+        page === 'files'
+          ? 'Type a file name or path'
+          : page === 'themes'
+            ? 'Search themes'
+            : 'Search commands'
       }
       footer={
         <div className="command-menu-footer">
@@ -264,6 +305,31 @@ export function CommandMenu({
           ))
         ) : (
           <div className="command-menu-empty">No files match your search.</div>
+        )}
+      </CommandPalette.Page>
+
+      <CommandPalette.Page
+        id="themes"
+        searchPrefix={['themes']}
+        onEscape={() => {
+          setSearch('');
+          setPage('root');
+        }}
+      >
+        {themeItems.length > 0 ? (
+          themeItems.map((list) => (
+            <CommandPalette.List key={list.id} heading={list.heading}>
+              {list.items.map(({ id, ...item }) => (
+                <CommandPalette.ListItem
+                  key={id}
+                  index={getItemIndex(themeItems, id)}
+                  {...item}
+                />
+              ))}
+            </CommandPalette.List>
+          ))
+        ) : (
+          <div className="command-menu-empty">No themes match your search.</div>
         )}
       </CommandPalette.Page>
     </CommandPalette>
