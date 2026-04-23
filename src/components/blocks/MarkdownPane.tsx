@@ -21,7 +21,12 @@ renderer.link = ({ href, title, text }) => {
  * Links open in a new tab; all other markdown elements use the prose styles
  * defined in index.css under `.md-prose`.
  */
-export function MarkdownPane({ path, content, previewOpen, onPreviewToggle }: MarkdownPaneProps) {
+export function MarkdownPane({
+  path,
+  content,
+  previewOpen,
+  onPreviewToggle,
+}: MarkdownPaneProps) {
   const html = marked(content, { renderer }) as string;
 
   return (

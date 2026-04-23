@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --font-mono: var(--mono);
@@ -53,11 +53,11 @@
   --editor-bg-hover: var(--ctp-surface-0);
 
   --mono:
-    'Cascadia Code', 'Fira Code', 'SF Mono', Consolas, 'Liberation Mono', Menlo,
+    "Cascadia Code", "Fira Code", "SF Mono", Consolas, "Liberation Mono", Menlo,
     monospace;
 
   font:
-    14px/1.5 system-ui,
+    14px / 1.5 system-ui,
     -apple-system,
     sans-serif;
   color-scheme: dark;
@@ -127,7 +127,8 @@
   font-size: 0.875rem; /* matches text-sm */
   line-height: 1.5; /* matches leading-normal; explicit so ::before inherits correctly */
   min-height: calc(
-    0.875rem * 1.5
+    0.875rem *
+    1.5
   ); /* keeps blank lines open (empty spans have no content) */
 }
 
@@ -151,10 +152,7 @@
 /* Markdown prose styles */
 .md-prose {
   color: var(--editor-text);
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 .md-prose h1,
 .md-prose h2,

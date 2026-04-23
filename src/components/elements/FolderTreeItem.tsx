@@ -1,11 +1,11 @@
 import { ChevronRight, Folder, FolderOpen } from 'lucide-react';
 import * as React from 'react';
 
-import type { TreeNode } from '../../__mock__/types';
+import type { TreeNode as TreeNodeData } from '../../__mock__/types';
 import { FileTreeItem } from './FileTreeItem';
 
 interface FolderTreeItemProps {
-  node: Extract<TreeNode, { type: 'folder' }>;
+  node: Extract<TreeNodeData, { type: 'folder' }>;
   depth: number;
   selectedPath: string | null;
   defaultExpanded: ReadonlySet<string>;
@@ -16,7 +16,7 @@ interface FolderTreeItemProps {
  * Checks if the selected path lives anywhere inside this subtree.
  */
 function containsSelected(
-  node: TreeNode,
+  node: TreeNodeData,
   selectedPath: string | null,
 ): boolean {
   if (!selectedPath) {
@@ -113,7 +113,7 @@ export function TreeNode({
   defaultExpanded,
   onSelectFile,
 }: {
-  node: TreeNode;
+  node: TreeNodeData;
   depth: number;
   selectedPath: string | null;
   defaultExpanded: ReadonlySet<string>;
